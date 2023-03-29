@@ -10,7 +10,7 @@ def get_wilson_reply(message_list):
   return openai.ChatCompletion.create(
     model="gpt-3.5-turbo",
     messages=[
-        {"role": "system", "content": PROMPT},
+        {"role": "user", "content": PROMPT},
         *message_list
     ],
     temperature=0.9,
@@ -37,7 +37,7 @@ if __name__ == "__main__":
                 message_list)["choices"][0]["message"]
             message_list.append(formatted_assistant_message)
             say(formatted_assistant_message["content"])
-            while len(message_list) > 5:
+            while len(message_list) > 3:
                 message_list.pop(0)
         else:
             say("Knock it off! Something went wrong. Please try again.")
