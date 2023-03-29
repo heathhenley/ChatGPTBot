@@ -30,16 +30,20 @@ if __name__ == "__main__":
     def handle_message(event, say):
         message = event['text'].split(">")[1].strip()
         if message:
-            print(f"Message received: {message}")
-            formatted_user_message = {"role": "user", "content": message}
-            message_list.append(formatted_user_message)
-            formatted_assistant_message = get_wilson_reply(
-                message_list)["choices"][0]["message"]
-            message_list.append(formatted_assistant_message)
-            say(formatted_assistant_message["content"])
-            while len(message_list) > 3:
-                message_list.pop(0)
-            print(message_list)
+            try:
+                print(f"Message received: {message}")
+                formatted_user_message = {"role": "user", "content": message}
+                message_list.append(formatted_user_message)
+                formatted_assistant_message = get_wilson_reply(
+                    message_list)["choices"][0]["message"]
+                message_list.append(formatted_assistant_message)
+                say(formatted_assistant_message["content"])
+                while len(message_list) > 3:
+                    message_list.pop(0)
+                print(message_list)
+            except Exception as e:
+                print(e)
+                say("You son of a.... something went wrong 🙃.")
         else:
             say("Knock it off! Something went wrong. Please try again.")
     app.start(port=int(os.environ.get("PORT", 3000)))
