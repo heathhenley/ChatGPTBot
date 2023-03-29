@@ -33,9 +33,10 @@ if __name__ == "__main__":
             print(f"Message received: {message}")
             formatted_user_message = {"role": "user", "content": message}
             message_list.append(formatted_user_message)
-            formatted_assistant_message = get_wilson_reply(message_list)
+            formatted_assistant_message = get_wilson_reply(
+                message_list)["choices"][0]["message"]
             message_list.append(formatted_assistant_message)
-            say(formatted_assistant_message["choices"][0]["content"])
+            say(formatted_assistant_message["content"])
             while len(message_list) > 5:
                 message_list.pop(0)
         else:
