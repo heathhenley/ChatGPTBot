@@ -14,7 +14,7 @@ def get_wilson_reply(message_list):
         *message_list
     ],
     temperature=0.9,
-    max_tokens=4096,
+    max_tokens=3000,
     top_p=1.0,
     frequency_penalty=0.1,
     presence_penalty=0.6
