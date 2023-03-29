@@ -1,7 +1,7 @@
 # [John]WilsonGPT
 ## An AI Slack Bot to razz our good friend John on Slack
 
-This is a simple wrapper to call the Open AI API from Slack to have some some
+This is a simple wrapper to call the Open AI API from Slack to have some fun
 with our good friend John Wilson.
 
 If you want to set up your own slack bot, the Slack Bolt API is pretty easy to
