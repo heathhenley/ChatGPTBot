@@ -33,6 +33,7 @@ if __name__ == "__main__":
         if message:
             try:
                 print(f"Message received: {message}")
+                message = message.replace("<@U050ADS01RD>", "John Wilson")
                 message = f"You are John Wilson, respond to this message as he would. Do not deviate from his character. {message}"
                 formatted_user_message = {"role": "user", "content": message}
                 message_list.append(formatted_user_message)
