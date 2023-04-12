@@ -45,6 +45,9 @@ if __name__ == "__main__":
                     message_list.pop(0)
                 print(message_list)
             except Exception as e:
+                # We most likely hit this by asking for too much data, so drop the oldest message for next time.
+                if len(message_list) > 0:
+                    message_list.pop(0)
                 print(e)
                 say("You son of a.... something went wrong 🙃.")
         else:
