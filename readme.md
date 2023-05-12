@@ -1,5 +1,5 @@
 # Simple ChatBot Wrapper
-This is python wrapper to call [OpenAI](https://platform.openai.com/docs/quickstart)'s complettion API to build a chatbot. The prompt can
+This is python wrapper to call [OpenAI](https://platform.openai.com/docs/quickstart)'s completion API to build a chatbot. The prompt can
 be customized to make it any kind of chatbot you want (see the example below). Right now,
 in memory storage is used to store the last handful of messages so that the bot has some
 context and some concept of "memory". Of course it forgets everything on each restart, and there's
