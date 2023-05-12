@@ -2,9 +2,9 @@
 This is python wrapper to call [OpenAI](https://platform.openai.com/docs/quickstart)'s completion API to build a chatbot. The prompt can
 be customized to make it any kind of chatbot you want (see the example below). Right now,
 in memory storage is used to store the last handful of messages so that the bot has some
-context and some concept of "memory". Of course it forgets everything on each restart, and there's
-no checking to make sure your're not asking for too many tokens yet, so if that happens it will fail
-and remove the oldest message from the list.
+context and some concept of "memory". Of course it forgets everything on each restart of
+the server, and there's no checking to make sure your're not asking for too many tokens
+yet, so if that happens it will fail and remove the oldest message from the list.
 
 The next steps will be stick the message history somewhere persistent (based on my comfort
 levels I'm going to pick Postgres or Redis) so that it's kept between restarts. Then taking it
