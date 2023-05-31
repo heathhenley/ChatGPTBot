@@ -41,7 +41,7 @@ def home_post():
     if data['type'] == 'REMOVED_FROM_SPACE':
         logging.info('Bot removed from a space')
         return None
-    resp_dict = format_response(data)
+    resp_dict = {'text' : format_response(data)}
     return json.jsonify(resp_dict)
 
 
