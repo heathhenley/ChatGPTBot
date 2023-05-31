@@ -87,10 +87,14 @@ class ChatBot:
         """
         # Get the full context of the conversation
         message_list, context = self._get_full_context(latest_message)
-        prompt = (f"{self.prompt}\n The information enclosed in "
-                  f"backticks, may be relevant to the query: `{context}`")
+        if context:
+            prompt = (f"{self.prompt}\n The information enclosed in "
+                      f"backticks will help you answer the query: `{context}`")
+        else:
+            prompt = self.prompt
         try:
             # Call OpenAI's API
+            # TODO(Heath): handle different response codes from API
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
