@@ -2,11 +2,12 @@ import os
 import openai
 import numpy as np
 import redis
+from redis.commands.search.query import Query
 
 DEFAULT_PROMPT = "You're a nice helpful chatbot."
 
 # Search Redis for similar information
-# TODO: Some of this is still immplemenation specific (I'm storing blog posts
+# TODO: Some of this is still implemenation specific (I'm storing blog posts
 # in redis). Figure out how to make this more generic?
 def search_vectors(query_vector, client, top_k=5):
     base_query = "*=>[KNN 5 @embedding $vector AS vector_score]"
@@ -67,12 +68,7 @@ class ChatBot:
         return self.message_queue, additional_context
 
     def _get_additional_context(self, latest_message: str) -> str:
-        # Compute embedding of latest message
-        embedding = openai.Embedding.create(
-            input=latest_message, model="text-embedding-ada-002")
-        embedding = embedding["data"][0]["embedding"]
-        latest_message_vector = np.array(embedding).astype(np.float32).tobytes()
-        # Find most similar information in redis
+        """ Find the most similar information in redis db to provide context."""
         if not self.redis_client:
             return ""
         # Compute embedding of latest message
