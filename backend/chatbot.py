@@ -98,7 +98,7 @@ class ChatBot:
                     *message_list,
                 ],
                 temperature=0.9,
-                max_tokens=3000,
+                max_tokens=1500,
                 top_p=1.0,
                 frequency_penalty=0.1,
                 presence_penalty=0.6
