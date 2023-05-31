@@ -1,2 +1,0 @@
-[deploy]
-startCommand = "gunicorn -b :$PORT chatbot:app"
