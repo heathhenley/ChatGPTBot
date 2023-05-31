@@ -47,7 +47,7 @@ class ChatBot:
                 socket_timeout=3.0)
 
         
-    def _get_full_context(self, latest_message: str) -> list, str:
+    def _get_full_context(self, latest_message: str) -> tuple[list, str]:
         """ Get the full context of the conversation
         
         Returns latest messages based on memory length and adds the
