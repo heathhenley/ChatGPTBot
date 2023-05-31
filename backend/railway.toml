@@ -1,2 +1,2 @@
 [deploy]
-startCommand = "python wilsongpt.py"
+startCommand = "python slack_example.py"
