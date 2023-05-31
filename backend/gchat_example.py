@@ -28,6 +28,7 @@ app = Flask(__name__)
 bot = chatbot.ChatBot(
     api_key=os.getenv("OPENAI_API_KEY"),
     prompt=os.getenv("PROMPT", chatbot.DEFAULT_PROMPT),
+    redis_string=os.getenv("REDIS_URL"),
     memory_length=5)
 
 @app.route('/', methods=['POST'])
