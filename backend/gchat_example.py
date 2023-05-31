@@ -19,7 +19,6 @@ A basic Hangouts Chat bot to interface with OpenAI's GPT-3.5 API.
 import logging
 import os
 
-import openai
 from flask import Flask, json, request
 
 import chatbot
@@ -44,6 +43,9 @@ def home_post():
     resp_dict = format_response(data)
     return json.jsonify(resp_dict)
 
+@app.route('/', methods=['GET'])
+def home_get():
+    return "Hello, world!"
 
 def format_response(event):
     """Determine what response to provide based upon event data.
