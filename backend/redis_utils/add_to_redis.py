@@ -1,12 +1,13 @@
-import argparse
 import os
+import requests
+
+from bs4 import BeautifulSoup
 import numpy as np
 import openai
 import redis
 
-import read_blog as rb
 
-BLOG_URL = r"https://www.farsounder.com/blog"
+BLOG_URL = r"https://heathhenley.github.io"
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -26,51 +27,41 @@ def add_text_to_redis(db, text, url):
     }
     db.hset(name=f"blog:{url}", mapping=post_hash)
 
-def _add_farsounder_blog_to_redis(db):
-    pipeline = db.pipeline(transaction=False)
-    print("Parsing blog...")
-    for url in rb.get_list_of_blog_urls(BLOG_URL):
-        text = rb.get_blog_text_for_url(url)
-        add_text_to_redis(db, text, url)
-    pipeline.execute()
 
-def add_file_to_redis(db, filename):
-    """ This assumes the file is hash0|text0\nhash1|text1\n..."""
-    pipeline = db.pipeline(transaction=False)
-    print("Parsing file..")
-    with open(filename, "r") as f:
-        for line in f.readlines():
-            tag, text = line.strip().split("|")
-            print(tag, text)
-            add_text_to_redis(db, text, tag)
-    pipeline.execute()
+def blog_to_post_urls(base_url: str) -> list[str]:
+    urls = []
+    page = 1
+    while True:
+        blog_page = f"{base_url}/page/{page}"
+        res = None
+        try:
+            res = requests.get(blog_page, timeout=10) 
+            if res.status_code != 200:
+                break
+        except Exception as e:
+            print(e)
+            break
+        page += 1 
+        soup = BeautifulSoup(res.text, 'html.parser')
+        for a in soup.find_all("a"):
+            if "/posts/" in a['href'] and a['href'] not in urls:
+                urls.append(a['href'])
+    return urls
 
-def index_blog():
-    print("connecting to Redis...")
-    redis_client = redis.from_url(url=os.getenv("REDIS_URL", ""), 
-        encoding='utf-8',
-        decode_responses=True,
-        socket_timeout=30.0)
-    print("checking Redis connection...")
-    if not redis_client or not redis_client.ping():
-        raise Exception("Redis connection failed")
-    print("Connected to Redis")
-
-    # Index FarSounder blog
-    _add_farsounder_blog_to_redis(redis_client)
-
-
-def index_faqs_file():
-    redis_client = redis.from_url(url=os.getenv("REDIS_URL", ""), 
-        encoding='utf-8',
-        decode_responses=True,
-        socket_timeout=30.0)
-    print("checking Redis connection...")
-    if not redis_client or not redis_client.ping():
-        raise Exception("Redis connection failed")
-    print("Connected to Redis")
-    # Index FarSounder blog
-    add_file_to_redis(redis_client, "../context_data/faqs.csv")
+def post_url_to_text(url: str) -> str:
+    res = None
+    try:
+        res = requests.get(url, timeout=10)
+        if res.status_code != 200:
+            return ""
+    except Exception as e:
+        print(e)
+        return ""
+    soup = BeautifulSoup(res.text, 'html.parser')
+    text = ""
+    for p in soup.find_all("section", class_="p-article__body"):
+        text += p.text
+    return text
 
 
 def main():
@@ -83,14 +74,12 @@ def main():
     if not redis_client or not redis_client.ping():
         raise Exception("Redis connection failed")
     print("Connected to Redis")
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--file", type=str,
-        help=("File to add to redis, in the format: "
-              "hash0|text0\nhash1|text1\n... the hash can be anything unique, "
-              "like a url or a number, a faq number, etc."))
-    args = parser.parse_args()
-    if args.file:
-        add_file_to_redis(redis_client, args.file)
+
+    print("Crawling my blog...")
+    for url in blog_to_post_urls(BLOG_URL): 
+        text = post_url_to_text(url)
+        print(f"Parsing: {url}")
+        add_text_to_redis(redis_client, text, url)
 
 
 if __name__ == "__main__":
