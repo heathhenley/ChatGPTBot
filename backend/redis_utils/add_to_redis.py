@@ -30,9 +30,12 @@ def add_text_to_redis(db, text, url):
 
 def blog_to_post_urls(base_url: str) -> list[str]:
     urls = []
-    page = 1
+    page = 0
     while True:
-        blog_page = f"{base_url}/page/{page}"
+        if page > 0:
+            blog_page = f"{base_url}/page/{page}"
+        else:
+            blog_page = base_url
         res = None
         try:
             res = requests.get(blog_page, timeout=10) 
