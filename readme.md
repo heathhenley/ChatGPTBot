@@ -1,4 +1,13 @@
 # Simple ChatBot Wrapper
+## Simple Python ChatBot Implementation
+Wrapper around OpenAI's chat completion API. Started working on this for fun, there's
+really no reason to use this project instead of LangChain unless you're just trying to
+find something simple to hack on. I've at least demonstrated how to wrap and use in
+a Google Chat bot (in use at work using our Tech Blog as context), a slack bot (not
+using any context at the moment) and FastAPI (using my own blog as context) this a
+WIP.
+
+## Overview
 This is python wrapper to call [OpenAI](https://platform.openai.com/docs/quickstart)'s completion API to build a chatbot. The prompt can
 be customized to make it any kind of chatbot you want (see the example below). Right now,
 in memory storage is used to store the last handful of messages so that the bot has some
@@ -6,14 +15,8 @@ context and some concept of "memory". Of course it forgets everything on each re
 the server, and there's no checking to make sure your're not asking for too many tokens
 yet, so if that happens it will fail and remove the oldest message from the list.
 
-The next steps will be stick the message history somewhere persistent (based on my comfort
-levels I'm going to pick Postgres or Redis) so that it's kept between restarts. Then taking it
-a step further, we can compute embeddings for the messages,
-and then use the embeddings of the query to search for the most relevant messages
-from the chat history to pass those in as context. This same approach can be used to make
-you bot an "expert" on whatever you're interested in, just compute embeddings for that
-thing (say your blog, website, etc) and look for the most similar entries to the query to
-pass as context.
+It is set up to use a Redis DB as a "context cache" or "knowledge store" - so a search
+can be done on each query to look for relevant context to give to the model.
 
 ## Examples
 ### WilsonGPT - An AI Slack Bot to razz our good friend John on Slack
