@@ -107,8 +107,10 @@ class ChatBot:
     def _get_prompt_with_context(self, context: str) -> str:
         if not context:
             return self.prompt
-        return (f"{self.prompt}\nThe information enclosed in "
-                      f"backticks will help you answer the query: `{context}`")
+        return (f"""
+             {self.prompt}\nThe information enclosed in
+             backticks will help you answer the query: `{context}`\n
+             The user says: """)
 
     def _trim_to_fit_token_limit(self, message_list: list, context: str) -> str:
         prompt = self._get_prompt_with_context(context)
