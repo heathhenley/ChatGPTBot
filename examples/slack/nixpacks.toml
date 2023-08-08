@@ -3,7 +3,7 @@ NIXPACKS_METADATA = 'python'
 PYTHONUNBUFFERED = '1'
 [phases.install]
 dependsOn = ['setup']
-cmds = ['python -m venv /opt/venv && . /opt/venv/bin/activate && pip install -r examples/slack/requirements.txt' && pip install -e chatbot]
+cmds = ['python -m venv /opt/venv && . /opt/venv/bin/activate && pip install -r examples/slack/requirements.txt && pip install -e chatbot']
 cacheDirectories = ['/root/.cache/pip']
 paths = ['/opt/venv/bin']
 
