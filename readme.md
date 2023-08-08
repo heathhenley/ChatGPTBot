@@ -20,12 +20,17 @@ It is set up to use a Redis DB as a "context cache" or "knowledge store" - so a 
 can be done on each query to look for relevant context to give to the model.
 
 ## Examples
-### WilsonGPT - An AI Slack Bot to razz our good friend John on Slack
+All of the examples here have been deployed on [railway.app](railway.app), but you
+could use whatever you like.
 
+### WilsonGPT - An AI Slack Bot to razz our good friend John on Slack
 This is a simple example of how to use this chatbot wrapper to create a slack bot.
 If you want to set up your own slack bot, the Slack Bolt API is pretty easy to
 use: 
 - https://slack.dev/bolt-python/tutorial/getting-started
 
-It's set up to run on [Railway](railway.app) in this case (see /backend/railway.toml) for the config
-and the required ENV variables with OpenAI and Slack secrets.
+### Google Chat Bot
+This is a simple example of how to create a chat bot for your google chat workspace.
+
+### FastAPI
+This is simple FastAPI app that uses this module in the backend of a API.
