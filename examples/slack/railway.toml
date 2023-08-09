@@ -1,2 +1,0 @@
-[deploy]
-startCommand = "python slack_example.py"

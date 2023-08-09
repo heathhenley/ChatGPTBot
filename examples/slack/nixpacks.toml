@@ -1,0 +1,21 @@
+[variables]
+NIXPACKS_METADATA = 'python'
+PYTHONUNBUFFERED = '1'
+[phases.install]
+dependsOn = ['setup']
+cmds = ['python -m venv /opt/venv && . /opt/venv/bin/activate && pip install -r examples/slack/requirements.txt']
+cacheDirectories = ['/root/.cache/pip']
+paths = ['/opt/venv/bin']
+
+[phases.setup]
+nixPkgs = [
+    'python310',
+    'gcc',
+]
+nixLibs = [
+    'zlib',
+    'stdenv.cc.cc.lib',
+]
+
+[start]
+cmd = "python examples/slack/slack_example.py"
