@@ -3,7 +3,7 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-import chatbot
+from chatbot import chatbot
 
 description = """
 This is a simple API that uses OpenAI's GPT-3.5 API to answer questions about
