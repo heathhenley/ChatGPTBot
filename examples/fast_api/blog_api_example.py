@@ -34,8 +34,11 @@ most relevant information from the blog to the query from the user is enclosed. 
 bot = chatbot.ChatBot(
   api_key=os.getenv("OPENAI_API_KEY"),
   prompt=prompt,
-  redis_string=os.getenv("REDIS_URL"),
-  memory_length=1)
+  message_memory=chatbot.MessageMemory(memory_length=1),
+  knowledge_base=chatbot.KnowledgeBaseRedis(
+      redis_url=os.getenv("REDIS_URL"),
+      api_key=os.getenv("OPENAI_API_KEY"))
+)
 
 @app.get("/")
 def search_blog(user_query: str) -> str:
