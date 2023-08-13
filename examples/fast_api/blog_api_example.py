@@ -23,6 +23,8 @@ bot = chatbot.ChatBot(
   redis_string=os.getenv("REDIS_URL"),
   memory_length=1)
 
-@app.get("/chatbot")
-def read_root(user_query: str) -> str:
-    return bot.get_reply(user_query)
+@app.get("/")
+def read_root(user_query: str | None) -> str:
+  if not user_query:
+    return "Please provide a query."
+  return bot.get_reply(user_query)
