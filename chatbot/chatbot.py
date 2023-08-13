@@ -164,8 +164,7 @@ class ChatBot:
                 frequency_penalty=0.1,
                 presence_penalty=0.6
             )["choices"][0]["message"]
-            if self.message_memory:
-                self.message_memory.add_latest_bot_response(response)
+            self.message_memory.add_latest_bot_response(response)
             return response["content"]
         except Exception as e:
             print(e)
