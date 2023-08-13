@@ -38,5 +38,9 @@ bot = chatbot.ChatBot(
   memory_length=1)
 
 @app.get("/")
-def read_root(user_query: str) -> str:
+def search_blog(user_query: str) -> str:
+  """ Search the blog for relevant information and return a response.
+
+  Gets the most relevant information from the blog to the query
+  and uses it as context when generating the response."""
   return bot.get_reply(user_query)
