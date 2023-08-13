@@ -143,10 +143,9 @@ class ChatBot:
         
         Returns a string containing the chatbot's response.
         """
-        message_list, context = [], None
-        if self.message_memory:
-            self.message_memory.add_latest_user_query(user_query)
-            message_list = self.message_memory.get_message_list()
+        self.message_memory.add_latest_user_query(user_query)
+        message_list = self.message_memory.get_message_list()
+        context = None
         if self.knowledge_base:
             context = self.knowledge_base.get_context(user_query)
         try:
