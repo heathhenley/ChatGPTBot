@@ -5,7 +5,21 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import chatbot
 
-app = FastAPI()
+description = """
+This is a simple API that uses OpenAI's GPT-3.5 API to answer questions about
+my personal blog. The API is built using FastAPI and deployed on Railway. This
+is an example of the simple chatbot module that I put together as a learning
+exercise.
+"""
+
+app = FastAPI(
+  title="Chatbot API - Heath's Blog",
+  description=description,
+  contact={
+    "name": "Heath Henley",
+    "url": "https://github.com/heathhenley/ChatGPTBot",
+    "email": "heath.j.henley@gmail.com"
+  })
 
 app.add_middleware(
     CORSMiddleware,
@@ -24,7 +38,5 @@ bot = chatbot.ChatBot(
   memory_length=1)
 
 @app.get("/")
-def read_root(user_query: str | None) -> str:
-  if not user_query:
-    return "Please provide a query."
+def read_root(user_query: str) -> str:
   return bot.get_reply(user_query)
