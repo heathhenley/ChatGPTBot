@@ -2,30 +2,12 @@ import openai
 import numpy as np
 import redis
 from redis.commands.search.query import Query
-import tiktoken
+
+from utils import num_tokens
 
 DEFAULT_PROMPT = "You're a nice helpful chatbot."
 MAX_TOKENS = 16000
 GPT_MODEL = "gpt-3.5-turbo-0613"
-
-# From: https://platform.openai.com/docs/guides/chat/introduction
-def num_tokens(messages, prompt="", model=GPT_MODEL):
-    """Returns the number of tokens used by a list of messages."""
-    try:
-        encoding = tiktoken.encoding_for_model(model)
-    except KeyError:
-        encoding = tiktoken.get_encoding("cl100k_base")
-    if model != GPT_MODEL:
-        raise NotImplementedError(f"""num_tokens() is not presently implemented for model {model}.""")
-    num_tks = 0
-    for message in messages:
-        num_tks += 4  # every message follows <im_start>{role/name}\n{content}<im_end>\n
-        for key, value in message.items():
-            num_tks += len(encoding.encode(value))
-            if key == "name":  # if there's a name, the role is omitted
-                num_tks += -1  # role is always required and always 1 token
-    num_tks += 2  # every reply is primed with <im_start>assistant
-    return num_tks + len(encoding.encode(prompt))
 
 
 # Search Redis for similar information
@@ -55,12 +37,14 @@ class ChatBot:
             prompt: str = DEFAULT_PROMPT,
             memory_length: int = 5,
             custom_append_message: str = None,
-            redis_string: str = None):
+            redis_string: str = None,
+            gpt_model: str = GPT_MODEL):
         openai.api_key = api_key
         self.prompt = prompt
         self.memory_length = memory_length
         self.message_queue = []
         self.custom_append_message = custom_append_message
+        self.gpt_model = gpt_model
         self.redis_client = None
         if redis_string:
             self.redis_client = redis.from_url(
@@ -139,7 +123,7 @@ class ChatBot:
             print(f"{num_tokens(message_list, prompt)} tokens")
             # Call OpenAI's API
             response = openai.ChatCompletion.create(
-                model=GPT_MODEL,
+                model=self.gpt_model,
                 messages=[
                     {"role": "user", "content": prompt.strip()},
                     *message_list,
