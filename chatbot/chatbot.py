@@ -110,13 +110,12 @@ class ChatBot:
             prompt = self._get_prompt_with_context(context)
         return prompt
 
-    def get_reply(self, latest_message: str) -> str:
+    def get_reply(self, user_query: str) -> str:
         """ Get a reply from the chatbot.
         
         Returns a string containing the chatbot's response.
         """
-        # Get the full context of the conversation to put it in prompt
-        message_list, context = self._get_full_context(latest_message)
+        message_list, context = self._get_full_context(user_query)
 
         try:
             prompt = self._trim_to_fit_token_limit(message_list, context)
