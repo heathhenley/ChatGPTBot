@@ -12,8 +12,7 @@ if __name__ == "__main__":
     bot = chatbot.ChatBot(
         api_key=os.getenv("OPENAI_API_KEY"),
         prompt=os.getenv("PROMPT", chatbot.DEFAULT_PROMPT),
-        memory_length=5,
-        custom_append_message="You are John Wilson, respond to this message as he would. Do not deviate from his character.")
+        messaage_memory=chatbot.MessageMemory(memory_length=5))
     
     app = App(
         token=os.environ.get("SLACK_TOKEN"),

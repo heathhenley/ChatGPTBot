@@ -29,7 +29,7 @@ app = Flask(__name__)
 bot = chatbot.ChatBot(
     api_key=os.getenv("OPENAI_API_KEY"),
     prompt=os.getenv("PROMPT", chatbot.DEFAULT_PROMPT),
-    memory_length=5)
+    messaage_memory=chatbot.MessageMemory(memory_length=10))
 
 @app.route('/', methods=['POST'])
 def home_post():
