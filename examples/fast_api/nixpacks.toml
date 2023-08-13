@@ -1,0 +1,21 @@
+[variables]
+NIXPACKS_METADATA = 'python'
+PYTHONUNBUFFERED = '1'
+[phases.install]
+dependsOn = ['setup']
+cmds = ['python -m venv /opt/venv && . /opt/venv/bin/activate && pip install -r examples/fast_api/requirements.txt']
+cacheDirectories = ['/root/.cache/pip']
+paths = ['/opt/venv/bin']
+
+[phases.setup]
+nixPkgs = [
+    'python310',
+    'gcc',
+]
+nixLibs = [
+    'zlib',
+    'stdenv.cc.cc.lib',
+]
+
+[start]
+cmd = "uvicorn examples.fast_api.blog_api_example:app --host 0.0.0.0 --port $PORT"
