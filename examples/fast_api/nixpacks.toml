@@ -18,4 +18,4 @@ nixLibs = [
 ]
 
 [start]
-cmd = "uvicorn examples.fast_api.blog_api_example:app --host 0.0.0.0 --port $PORT
+cmd = "uvicorn examples.fast_api.blog_api_example:app --host 0.0.0.0 --port $PORT"
