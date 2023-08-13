@@ -115,19 +115,6 @@ class ChatBot:
         self.knowledge_base = knowledge_base
         self.max_tokens = 500
 
-    def _get_additional_context(self, latest_message: str) -> str:
-        """ Find the most similar information in redis db to provide context."""
-        if not self.redis_client:
-            return ""
-        # Compute embedding of latest message
-        embedding = openai.Embedding.create(
-            input=latest_message,
-            model="text-embedding-ada-002")
-        embedding = embedding["data"][0]["embedding"]
-        vector = np.array(embedding).astype(np.float32).tobytes()
-        # Search Redis for similar information
-        return search_vectors(vector, self.redis_client).docs[0].content
-
     def _get_prompt_with_context(self, context: str) -> str:
         if not context:
             return self.prompt
