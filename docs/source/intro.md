@@ -11,5 +11,4 @@ Chatbot module to interface with OpenAI's API and add some common chat functiona
 - save a short message history
 - add a knowledge base and use it to find relevant data based on vector similarity (also
   using OpenAI for the embeddings)
-- examples of how to interface with Slack, Google Chat, and create a FastAPI REST API:w
-- 
+- examples of how to interface with Slack, Google Chat, and create a FastAPI REST API
