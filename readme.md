@@ -30,10 +30,14 @@ prompt, context and the default in memory chat history of only 5 messages.
 "Hello! I'm here to help you with any questions or problems you may have. How can I assist you today?"
 ```
 For an example of how to use a custom Redis DB as a knowledge store, see the
-FastAPI example below.
+FastAPI example below. All of the examples here have been deployed on
+[railway.app](railway.app), but you could use whatever you like.
 
-All of the examples here have been deployed on [railway.app](railway.app), but
-you could use whatever you like.
+### Installation
+Currently you can only "install" by `git clone`ing the repo, and
+`pip install -r requirements.txt` the requirements (probably in a venv). Each
+example has it's own requirements.txt file, so you'll need to install those for
+whatever example you want to run.
 
 ### WilsonGPT - An AI Slack Bot to razz our good friend John on Slack
 This is a simple example of how to use this chatbot wrapper to create a slack bot.
