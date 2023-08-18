@@ -12,7 +12,7 @@ For an example of how to use a custom Redis DB as a knowledge store, see the
 FastAPI example below. All of the examples here have been deployed on
 [railway.app](railway.app), but of course you could use whatever you like.
 
-## WilsonGPT - An AI Slack Bot to razz our good friend John on Slack
+## Slack Bot
 This is a [simple example](https://github.com/heathhenley/ChatGPTBot/tree/main/examples/slack) of how to use this chatbot wrapper to create a slack bot.
 If you want to set up your own slack bot, the Slack Bolt API is pretty easy to
 use:
