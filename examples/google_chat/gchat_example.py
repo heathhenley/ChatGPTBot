@@ -19,10 +19,9 @@ A basic Hangouts Chat bot to interface with OpenAI's GPT-3.5 API.
 import logging
 import os
 
-import openai
 from flask import Flask, json, request
 
-import chatbot
+from chatbot import chatbot
 
 # Globals
 app = Flask(__name__)

@@ -2,7 +2,7 @@
 import os
 from slack_bolt import App
 
-import chatbot
+from chatbot import chatbot
 
 if __name__ == "__main__":
     # Use general GPT chatbot wrapper to create a chatbot instance, give it
