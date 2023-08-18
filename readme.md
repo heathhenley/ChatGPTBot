@@ -8,16 +8,11 @@ context), a slack bot (not using any context at the moment) and FastAPI (using m
 blog as context) this a WIP.
 
 ## Overview
-This is python wrapper to call [OpenAI](https://platform.openai.com/docs/quickstart)'s
-completion API to build a chatbot. The prompt can be customized to make it any kind of
-chatbot you want (see the example below). Right now, in memory storage is used to store
-the last handful of messages so that the bot has some context and some concept of "memory".
-Of course it forgets everything on each restart of the server, and there's no checking
-to make sure your're not asking for too many tokens yet, so if that happens it will
-fail and remove the oldest message from the list.
-
-It is set up to use a Redis DB as a "context cache" or "knowledge store" - so a search
-can be done on each query to look for relevant context to give to the model.
+Chatbot module to interface with OpenAI's API and add some common chat functionality:
+- save a short message history
+- add a knowledge base and use it to find relevant data based on vector similarity (also
+  using OpenAI for the embeddings)
+- examples of how to interface with Slack, Google Chat, and create a FastAPI REST API
 
 ## Examples
 Here's the simplest basic example of how to use this module, with no custom
