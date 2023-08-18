@@ -20,8 +20,20 @@ It is set up to use a Redis DB as a "context cache" or "knowledge store" - so a 
 can be done on each query to look for relevant context to give to the model.
 
 ## Examples
-All of the examples here have been deployed on [railway.app](railway.app), but you
-could use whatever you like.
+Here's the simplest basic example of how to use this module, with no custom
+prompt, context and the default in memory chat history of only 5 messages.
+```python
+>>> from chatbot import chatbot
+>>> import os
+>>> bot = chatbot.ChatBot(api_key=os.getenv("OPENAI_API_KEY"))
+>>> bot.get_reply("What's up there chatbot?")
+"Hello! I'm here to help you with any questions or problems you may have. How can I assist you today?"
+```
+For an example of how to use a custom Redis DB as a knowledge store, see the
+FastAPI example below.
+
+All of the examples here have been deployed on [railway.app](railway.app), but
+you could use whatever you like.
 
 ### WilsonGPT - An AI Slack Bot to razz our good friend John on Slack
 This is a simple example of how to use this chatbot wrapper to create a slack bot.
