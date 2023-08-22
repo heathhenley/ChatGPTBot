@@ -5,12 +5,12 @@ from redis.commands.search.query import Query
 
 from chatbot.utils import num_tokens
 
+
 DEFAULT_PROMPT = "You're a nice helpful chatbot."
 MAX_TOKENS = 16000
 GPT_MODEL = "gpt-3.5-turbo-0613"
 
-# TODO(Heath): Move these classes to their own files / folders based on their
-# functionality to make this easier to read / navigate.
+
 class BaseMessageMemory:
     """Base class for storing the conversation history. This interface is
     assumed to be implemented by the :class:`ChatBot`, so any new child
