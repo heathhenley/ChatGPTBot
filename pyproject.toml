@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["chatbot"]
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+
+[project]
+name = "chatbot"
+version = "0.0.1"
+authors = [
+  { name="Heath Henley", email="heath.j.henley@gmail.com" },
+]
+dynamic = ["dependencies"]
+description = "Simple OpenAI chatbot module"
+readme = "readme.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/heathhenley/chatgptbot"
