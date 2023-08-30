@@ -115,7 +115,7 @@ class KnowledgeBaseRedis(BaseKnowledgeBase):
             decode_responses=True,
             socket_timeout=3.0)
 
-    def get_context(self, user_query: str) -> str | None:
+    def get_context(self, user_query: str) -> tuple[str, str] | None:
         """Get the context for the user's query.
 
         :param user_query: The user's query
@@ -150,7 +150,9 @@ class KnowledgeBaseRedis(BaseKnowledgeBase):
         except Exception as e:
             print("Error calling Redis search: ", e)
             return None
-        return results.docs[0].content
+        url = results.docs[0].id.replace("blog:", "")
+        content = results.docs[0].content
+        return url, content
 
 
 class ChatBot:
@@ -241,9 +243,9 @@ class ChatBot:
         """
         self.message_memory.add_latest_user_query(user_query)
         message_list = self.message_memory.get_message_list()
-        context = None
+        url, context = None, None
         if self.knowledge_base:
-            context = self.knowledge_base.get_context(user_query)
+            url, context = self.knowledge_base.get_context(user_query)
         try:
             prompt = self._trim_to_fit_token_limit(
                 message_list, context)
@@ -261,7 +263,11 @@ class ChatBot:
                 presence_penalty=0.6
             )["choices"][0]["message"]
             self.message_memory.add_latest_bot_response(response)
-            return response["content"]
+            response = response["content"]
+            if url:
+                link_text = "This link was used to generate an answer"
+                response = f"{response}\n\n{link_text}: {url}"
+            return response
         except Exception as e:
             print(e)
             raise(e)
