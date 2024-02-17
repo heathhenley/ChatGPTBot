@@ -4,6 +4,17 @@ from slack_bolt import App
 
 from chatbot import chatbot
 
+
+def get_name_from_id(app, userid) -> str:
+    # Get the user's name from their ID
+    try:
+        user_info = app.client.users_info(user=userid)
+        return user_info['user']['profile']['first_name']
+    except Exception as e:
+        print(f"Error getting username: {e}")
+        return "Unknown User"
+
+
 if __name__ == "__main__":
     # Use general GPT chatbot wrapper to create a chatbot instance, give it
     # a prompt that we store in an environment variable for now. It should
@@ -24,9 +35,10 @@ if __name__ == "__main__":
     @app.event("app_mention")
     def handle_message(event, say):
         message = event['text']
+        who = get_name_from_id(app, event['user'])
         if message:
             try:
-                say(bot.get_reply(message))
+                say(bot.get_reply(f"{who} says: {message}"))
             except Exception as e:
                 print(e)
                 say("You son of a.... something went wrong 🙃.")
