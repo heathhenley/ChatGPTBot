@@ -8,7 +8,7 @@ from chatbot.utils import num_tokens
 
 DEFAULT_PROMPT = "You're a nice helpful chatbot."
 MAX_TOKENS = 16000
-GPT_MODEL = "gpt-3.5-turbo-0613"
+GPT_MODEL = "gpt-3.5-turbo"
 
 
 class BaseMessageMemory:
