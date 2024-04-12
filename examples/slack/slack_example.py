@@ -12,6 +12,7 @@ def get_name_from_id(app, userid) -> str:
         return user_info['user']['profile']['first_name']
     except Exception as e:
         print(f"Error getting username: {e}")
+        print(user_info['user'])
         return "Unknown User"
 
 
