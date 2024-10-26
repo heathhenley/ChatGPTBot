@@ -42,6 +42,8 @@ if __name__ == "__main__":
             try:
                 say(bot.get_reply(f"{who} says: {message}"))
             except Exception as e:
+                import traceback
+                print(traceback.format_exc())
                 print(e)
                 say("You son of a.... something went wrong 🙃.")
         else:
