@@ -11,6 +11,7 @@ def num_tokens(messages, model, prompt=""):
     for message in messages:
         num_tks += 4  # every message follows <im_start>{role/name}\n{content}<im_end>\n
         for key, value in message.items():
+            print(value, type(value))
             num_tks += len(encoding.encode(value))
             if key == "name":  # if there's a name, the role is omitted
                 num_tks += -1  # role is always required and always 1 token
