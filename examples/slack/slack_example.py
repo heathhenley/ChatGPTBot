@@ -9,6 +9,7 @@ def get_name_from_id(app, userid) -> str:
     # Get the user's name from their ID
     try:
         user_info = app.client.users_info(user=userid)
+        print(user_info)
         pf = user_info['user']['profile']
         return pf.get('first_name', pf['display_name'])
     except Exception as e:
